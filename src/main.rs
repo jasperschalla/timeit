@@ -139,6 +139,12 @@ fn get_status(end: bool, conn: &Connection, old_tasks: Vec<Task>) -> Result<()> 
                         "UPDATE task SET end_time = ?1 WHERE id = ?2",
                         params![time, start_id],
                     )?;
+                } else {
+                    let start_id = start_task.as_ref().unwrap().id;
+                    conn.execute(
+                        "UPDATE task SET end_time = ?1 WHERE id = ?2",
+                        params![time, start_id],
+                    )?;
                 }
             }
             None => match &start_task {
@@ -187,7 +193,7 @@ fn get_status(end: bool, conn: &Connection, old_tasks: Vec<Task>) -> Result<()> 
                 println!("{}", message.green());
             }
             _ => {
-                println!("{}", message.black());
+                println!("{}", message.bright_black());
             }
         }
         println!("-------------------------------------------------------------------------");
@@ -229,7 +235,7 @@ fn get_status(end: bool, conn: &Connection, old_tasks: Vec<Task>) -> Result<()> 
                 }
                 None => {
                     println!();
-                    println!("{}", "You have not started working yet.".black());
+                    println!("{}", "You have not started working yet.".bright_black());
                     return Ok(());
                 }
             }
@@ -302,7 +308,10 @@ fn main() -> Result<()> {
                                 println!("Status: {}", "Your are currently working.".green());
                             }
                             None => {
-                                println!("Status: {}", "You are currently on a break.".black());
+                                println!(
+                                    "Status: {}",
+                                    "You are currently on a break.".bright_black()
+                                );
                             }
                         }
                     }
@@ -311,7 +320,10 @@ fn main() -> Result<()> {
                     }
                 },
                 None => {
-                    println!("Status: {}", "Your are currently not working.".black());
+                    println!(
+                        "Status: {}",
+                        "Your are currently not working.".bright_black()
+                    );
                 }
             }
 
@@ -319,7 +331,7 @@ fn main() -> Result<()> {
             Ok(())
         }
         "break" => {
-            println!("{}", "Pausing timer...".black());
+            println!("{}", "Pausing timer...".bright_black());
             let status = "break";
             let last_break = get_last_break(tasks);
 
