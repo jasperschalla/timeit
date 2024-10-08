@@ -225,11 +225,15 @@ fn get_status(end: bool, conn: &Connection, old_tasks: Vec<Task>) -> Result<()> 
                     let break_duration = get_break_duration(tasks.clone());
                     let total_duration = duration - break_duration;
 
+                    let total_duration_hours = (total_duration / 60.0).floor();
+                    let total_duration_minutes = (total_duration % 60.0).ceil();
+
                     println!();
                     println!(
                         "{}",
-                        format!("You have finished today's work. Good job! Your worked for {} minute(s).",
-                        total_duration.ceil()).green()
+                        format!("You have finished today's work. Good job! Your worked for {} hour(s) and {} minute(s).",
+                        total_duration_hours,
+                        total_duration_minutes).green()
                     );
                     return Ok(());
                 }
