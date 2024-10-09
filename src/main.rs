@@ -163,6 +163,12 @@ fn main() -> Result<()> {
             }
             Ok(())
         }
+        "test" => {
+            conn.execute("DELETE FROM task", params![])?;
+            conn.execute("DELETE FROM SQLITE_SEQUENCE WHERE name='task'", params![])?;
+            println!("{}", "Test command is running...");
+            Ok(())
+        }
         _ => {
             println!("{}", "Invalid action.".bright_red());
             Ok(())
