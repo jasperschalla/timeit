@@ -8,6 +8,8 @@ Are you working without a strict time management system and you have to track yo
 
 Go to the folder of your choice and clone this repo with `git clone git@github.com:jasperschalla/timeit.git .`.
 
+Build the project by running `cargo build --release`. Cargo should already be installed at this point.
+
 Add the path of the release version to your .bashrc (or .zshrc) file by running `echo 'export PATH="<your_project_directory>/target/release:$PATH"' >> ~/.bashrc`.
 
 Now you can run `timeit --help` to see if it works and is recognized.
