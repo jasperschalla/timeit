@@ -12,7 +12,7 @@ Build the project by running `cargo build --release`. Cargo should already be in
 
 Add the path of the release version to your .bashrc (or .zshrc) file by running `echo 'export PATH="<your_project_directory>/target/release:$PATH"' >> ~/.bashrc`.
 
-Now you can run `timeit --help` to see if it works and is recognized.
+Now you can run `timeit --help` to see if it works and is recognized. The database is initiazed in the _~/Library/Application Support/timeit_ folder that is created, once the database is started.
 
 ## Usage
 

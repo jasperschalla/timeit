@@ -5,17 +5,25 @@ use clap::Parser;
 use colored::*;
 use models::{Cli, Task};
 use rusqlite::{params, Connection, Result};
+use std::path::PathBuf;
 use utils::*;
 
-fn main() -> Result<()> {
+fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Parse arguments
     let args: Cli = Cli::parse();
 
     // Get current time
     let time_formatted = get_current_time();
 
+    // Create dir for db
+    create_dir_if_not_exists()?;
+
+    // Get db path
+    let db_path_dir = get_data_dir()?;
+    let db_path = PathBuf::from(db_path_dir).join("timeit.db");
+
     // DB connection
-    let conn = Connection::open("timeit.db")?;
+    let conn = Connection::open(db_path)?;
 
     // Create table
     conn.execute(

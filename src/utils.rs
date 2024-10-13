@@ -3,8 +3,28 @@ use chrono::{DateTime, Utc};
 use chrono_tz::Europe::Berlin;
 use colored::*;
 use rusqlite::{params, Connection, Error, Result};
+use std::env;
+use std::fs;
+use std::path::PathBuf;
 
 // Helper
+
+pub fn get_data_dir() -> Result<PathBuf, Box<dyn std::error::Error>> {
+    let home_dir = env::var("HOME")?;
+    let folder_path = PathBuf::from(home_dir)
+        .join("Library")
+        .join("Application Support")
+        .join("timeit");
+    Ok(folder_path)
+}
+
+pub fn create_dir_if_not_exists() -> Result<(), Box<dyn std::error::Error>> {
+    let path: PathBuf = get_data_dir()?;
+    if !path.exists() {
+        fs::create_dir_all(path)?;
+    }
+    Ok(())
+}
 
 pub fn get_current_time() -> String {
     let now_utc: DateTime<Utc> = Utc::now();
